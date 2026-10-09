@@ -11,7 +11,7 @@ go run ./cmd/server
 
 The default database is `student_matching`, and the default HTTP port is `3000`.
 
-Set `FRONTEND_ORIGINS` to a comma-separated list (no spaces) of exact frontend origins allowed to call the API and connect over WebSocket. For example, on Render use `https://your-app.vercel.app` (without a trailing slash). If unset, only `http://localhost:3001` and `http://127.0.0.1:3001` are allowed.
+Set `FRONTEND_ORIGINS` to a comma-separated list of frontend origins allowed to call the API and connect over WebSocket. Exact origins are preferred, for example `https://your-app.vercel.app` (without a trailing slash). For Vercel previews, `https://*.vercel.app` allows any single-level Vercel subdomain; this is broader than an exact allowlist and should only be used when needed. If unset, only `http://localhost:3001` and `http://127.0.0.1:3001` are allowed.
 
 ## Endpoints
 

@@ -51,8 +51,11 @@ func main() {
 	if frontendOrigins == "" {
 		frontendOrigins = "http://localhost:3001,http://127.0.0.1:3001"
 	}
+	allowedOrigins := strings.Split(frontendOrigins, ",")
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: frontendOrigins,
+		AllowOriginsFunc: func(origin string) bool {
+			return originAllowed(origin, allowedOrigins)
+		},
 		AllowMethods: "GET,POST,OPTIONS",
 		AllowHeaders: "Origin,Content-Type,Accept",
 	}))
@@ -75,8 +78,13 @@ func main() {
 	matches.Post("/find", matchHandler.Find)
 	matches.Get("/history/:student_id", matchHandler.History)
 	matches.Get("/:match_id/messages", chatHandler.History)
-	app.Get("/ws/chat", fiberws.New(chatHandler.Handle, fiberws.Config{
-		Origins: strings.Split(frontendOrigins, ","),
+	app.Get("/ws/chat", func(c *fiber.Ctx) error {
+		if !originAllowed(c.Get(fiber.HeaderOrigin), allowedOrigins) {
+			return fiber.ErrForbidden
+		}
+		return c.Next()
+	}, fiberws.New(chatHandler.Handle, fiberws.Config{
+		Origins: []string{"*"},
 	}))
 
 	port := strings.TrimSpace(os.Getenv("PORT"))

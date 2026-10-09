@@ -17,6 +17,6 @@ For a Vercel deployment using the Render API at `https://lofi-sk54.onrender.com`
 - `NEXT_PUBLIC_API_URL=https://lofi-sk54.onrender.com`
 - `NEXT_PUBLIC_WS_URL=wss://lofi-sk54.onrender.com`
 
-On Render, set `FRONTEND_ORIGINS` to the exact Vercel origin, for example `https://your-app.vercel.app` (no trailing slash). If the app uses multiple domains, provide a comma-separated list with no spaces. The API uses this setting for both CORS and WebSocket origin checks. The default only allows local development origins on port 3001.
+On Render, set `FRONTEND_ORIGINS` to the exact Vercel origin, for example `https://your-app.vercel.app` (no trailing slash). If you need Vercel preview deployments, you can add `https://*.vercel.app` to the comma-separated list; this allows any single-level Vercel subdomain, not just this project, so use exact origins when possible. The API uses this setting for both CORS and WebSocket origin checks. The default only allows local development origins on port 3001.
 
 The browser stores only the student's ID in `localStorage`. Authentication is not currently enabled by the backend, so this is a development flow and must not be treated as secure identity verification.
