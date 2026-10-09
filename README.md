@@ -11,6 +11,8 @@ go run ./cmd/server
 
 The default database is `student_matching`, and the default HTTP port is `3000`.
 
+Set `FRONTEND_ORIGINS` to a comma-separated list (no spaces) of exact frontend origins allowed to call the API and connect over WebSocket. For example, on Render use `https://your-app.vercel.app` (without a trailing slash). If unset, only `http://localhost:3001` and `http://127.0.0.1:3001` are allowed.
+
 ## Endpoints
 
 - `POST /api/students/register` creates a student. Required JSON fields: `name`, `gender`, `orientation`, `age`, `height`, `department`, `class`, `verificationProof`, and both `preferences.targetGender` and `preferences.orientation`. `likes` and `dislikes` are optional arrays of strings.
